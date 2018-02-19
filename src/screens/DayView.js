@@ -62,14 +62,10 @@ export default class DayView extends React.Component {
         let message = this.state.info.poem
         Share.share({
             message: "\"" + message + "\"" + "\n\n" + this.state.info.verse + "\n" + this.state.info.versetext,
-            title: 'Verses from Verses: '
+            title: 'Verses from Verses: ' + this.state.fullDate
         }, {
             // Android only:
             dialogTitle: 'Share today\'s verse and poem',
-            // iOS only:
-            excludedActivityTypes: [
-                'com.apple.UIKit.activity.PostToTwitter'
-            ]
         })
     }
     constructor(props) {
