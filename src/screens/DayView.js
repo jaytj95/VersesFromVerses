@@ -1,9 +1,12 @@
-import {PixelRatio, AppState, Image, Animated, findNodeHandle, StyleSheet, Text, View, StatusBar} from 'react-native'
+import {
+    PixelRatio, AppState, Image, Animated, findNodeHandle, StyleSheet, Text, View, StatusBar,
+    TouchableOpacity
+} from 'react-native'
 import React, {Component} from 'react';
 import {Icon} from 'react-native-elements';
 import images from "../assets/images";
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
-
+import Mailer from 'react-native-mail';
 var randomInt = require('random-int');
 
 
@@ -45,6 +48,14 @@ export default class DayView extends React.Component {
         this.props.navigation.navigate('Calendar')
     }
 
+    handleEmail = () => {
+        Mailer.mail({
+            subject: 'Verses From Verses: Feedback',
+            recipients: [''],
+        }, (error, event) => {
+            console.log(error, event)
+        });
+    }
     constructor(props) {
         super(props);
 
@@ -125,16 +136,35 @@ export default class DayView extends React.Component {
                         <Text style={styles.VerseRef}>{this.state.info.verse}</Text>
                         <Text style={styles.Verse}>{this.state.info.versetext}</Text>
                     </View>
-                    <View style={{flex: 0.5, alignItems: 'center'}}>
+                    <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: responsiveFontSize(1)}}>
 
-                        <Icon
-                            onPress={this.gotoCalendar.bind(this)}
-                            name='calendar'
-                            type='font-awesome'
-                            size={responsiveFontSize(3)}
-                            color='#fff'
-                            style={{marginRight: 10}}
-                        />
+                        <TouchableOpacity
+                            onPress={this.handleEmail.bind(this)}>
+                            <Icon
+                                name='mail'
+                                type='entypo'
+                                size={responsiveFontSize(3)}
+                                color='#fff'
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={this.gotoCalendar.bind(this)}>
+                            <Icon
+                                name='calendar'
+                                type='font-awesome'
+                                size={responsiveFontSize(3)}
+                                color='#fff'
+                            />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={this.handleEmail.bind(this)}>
+                            <Icon
+                                name='share'
+                                type='entypo'
+                                size={responsiveFontSize(3)}
+                                color='#fff'
+                            />
+                        </TouchableOpacity>
                     </View>
                 </View>
             </View>

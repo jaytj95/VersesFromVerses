@@ -62,6 +62,9 @@ export default class CalendarPicker extends React.Component {
 
     render() {
         let { contentFadeAnim } = this.state;
+
+        const {goBack} = this.props.navigation;
+
         return (
             <View style={styles.MainContainer}>
                 <StatusBar
@@ -110,10 +113,10 @@ export default class CalendarPicker extends React.Component {
                     <View style={{flex: 1, alignItems: 'center'}}>
 
                         <Icon
-                            reverse
-                            name='calendar'
-                            type='font-awesome'
-                            color='#517fa4'
+                            name='arrow-left'
+                            type='feather'
+                            color='#fff'
+                            onPress={() => goBack()}
                         />
                     </View>
                 </View>
