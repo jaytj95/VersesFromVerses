@@ -1,5 +1,5 @@
 import {
-    PixelRatio, AppState, Image, Animated, findNodeHandle, StyleSheet, Text, View, StatusBar,
+    Share, AppState, Image, Animated, findNodeHandle, StyleSheet, Text, View, StatusBar,
     TouchableOpacity
 } from 'react-native'
 import React, {Component} from 'react';
@@ -8,6 +8,7 @@ import images from "../assets/images";
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 import Mailer from 'react-native-mail';
 var randomInt = require('random-int');
+
 
 
 let v4v_data = require('../assets/versesfromverses.json');
@@ -55,6 +56,21 @@ export default class DayView extends React.Component {
         }, (error, event) => {
             console.log(error, event)
         });
+    }
+
+    handleShare = () => {
+        let message = this.state.info.poem
+        Share.share({
+            message: "\"" + message + "\"" + "\n\n" + this.state.info.verse + "\n" + this.state.info.versetext,
+            title: 'Verses from Verses: '
+        }, {
+            // Android only:
+            dialogTitle: 'Share today\'s verse and poem',
+            // iOS only:
+            excludedActivityTypes: [
+                'com.apple.UIKit.activity.PostToTwitter'
+            ]
+        })
     }
     constructor(props) {
         super(props);
@@ -136,7 +152,7 @@ export default class DayView extends React.Component {
                         <Text style={styles.VerseRef}>{this.state.info.verse}</Text>
                         <Text style={styles.Verse}>{this.state.info.versetext}</Text>
                     </View>
-                    <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row', margin: responsiveFontSize(1)}}>
+                    <View style={{flex: 1, justifyContent: 'space-between', flexDirection: 'row', marginLeft: responsiveFontSize(2), marginRight: responsiveFontSize(2)}}>
 
                         <TouchableOpacity
                             onPress={this.handleEmail.bind(this)}>
@@ -157,7 +173,7 @@ export default class DayView extends React.Component {
                             />
                         </TouchableOpacity>
                         <TouchableOpacity
-                            onPress={this.handleEmail.bind(this)}>
+                            onPress={this.handleShare.bind(this)}>
                             <Icon
                                 name='share'
                                 type='entypo'
